@@ -1,6 +1,3 @@
-FROM alpine:latest
-RUN apk add --no-cache python3 py3-cryptography bash
-
+FROM python:3.6.8-alpine
 COPY . /ghapp
-
-RUN pip3 install /ghapp
+RUN pip install /ghapp
