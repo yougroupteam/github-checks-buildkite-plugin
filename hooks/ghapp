@@ -62,6 +62,7 @@ echo "Sleep started at $(date '+%Y-%m-%d %H:%M:%S'), sleeping for $DURATION seco
 sleep "$DURATION"
 echo "Sleep ended at $(date '+%Y-%m-%d %H:%M:%S')"
 
+
 docker-compose -f ${COMPOSE_CONFIG} run "${run_params[@]}" --workdir=`pwd` --rm ghapp "${args[@]}" "$@"
 
 docker-compose -f ${COMPOSE_CONFIG} down
