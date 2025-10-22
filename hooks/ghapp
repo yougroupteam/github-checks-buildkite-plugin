@@ -57,6 +57,11 @@ do
   [[ ! -z "${vol// }" ]] && run_params+=("-v" "$(expand_relative_volume_path "$vol")")
 done
 
+DURATION=$(echo "scale=3; 1 + ($RANDOM/32767*2)" | bc)
+echo "Sleep started at $(date '+%Y-%m-%d %H:%M:%S'), sleeping for $DURATION seconds"
+sleep "$DURATION"
+echo "Sleep ended at $(date '+%Y-%m-%d %H:%M:%S')"
+
 docker-compose -f ${COMPOSE_CONFIG} run "${run_params[@]}" --workdir=`pwd` --rm ghapp "${args[@]}" "$@"
 
 docker-compose -f ${COMPOSE_CONFIG} down
