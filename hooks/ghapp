@@ -10,8 +10,9 @@ COMPOSE_CONFIG=`dirname $BASH_SOURCE`/../docker-compose.yml
 
 run_params=()
 args=()
+random=$RANDOM
 
-docker-compose -f ${COMPOSE_CONFIG} build ghapp
+docker-compose -p github-checks-buildkite-plugin-$random -f ${COMPOSE_CONFIG} build ghapp
 
 if [[ "${BUILDKITE_PLUGIN_GITHUB_CHECKS_DEBUG:-false}" =~ (true|on|1) ]] ; then
   args+=("-vv")
@@ -56,8 +57,6 @@ do
   # with repeated delimiters.
   [[ ! -z "${vol// }" ]] && run_params+=("-v" "$(expand_relative_volume_path "$vol")")
 done
-
-random=$RANDOM
 
 docker-compose -p github-checks-buildkite-plugin-$random -f ${COMPOSE_CONFIG} run "${run_params[@]}" --workdir=`pwd` --rm ghapp "${args[@]}" "$@"
 
